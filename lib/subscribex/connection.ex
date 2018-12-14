@@ -46,6 +46,8 @@ defmodule Subscribex.Connection do
 
     {:ok, connection} = connect(host)
     monitor = Process.monitor(connection.pid)
+
+    if (Enum.member?(Process.registered(), name)), do: Process.unregister(name)
     Process.register(connection.pid, name)
 
     {connection, monitor}
